@@ -1,4 +1,4 @@
-name             'chef-druid-example'
+name             'druid-example'
 maintainer       'N3TWORK'
 maintainer_email 'yuval@n3twork.com'
 license          'Apache 2.0'
