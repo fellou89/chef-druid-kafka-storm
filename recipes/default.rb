@@ -2,7 +2,6 @@
 #
 # Licensed under Apache 2.0 - see the LICENSE file
 
-
 include_recipe "apt"
 
 # Install zookeeper
@@ -10,17 +9,20 @@ node.set[:exhibitor][:opts][:port] = 8000
 include_recipe "zookeeper::default"
 
 node.set['mysql']['server_root_password'] = ''
-include_recipe "mysql::server"
+#include_recipe "mysql::server"
 
 # Create the druid db
-include_recipe "database::mysql"
-mysql_database 'druid' do
-  connection(
-      :host     => 'localhost',
-      :username => 'root',
-      :password => node['mysql']['server_root_password']
-  )
-  action :create
+#include_recipe "database::mysql"
+mysql_service 'druid' do
+#  connection(
+#      :host     => 'localhost',
+#      :username => 'root',
+#      :password => node['mysql']['server_root_password']
+#  )
+  port '3306'
+  version '5.5'
+  initial_root_password ''
+  action [ :create, :start ]
 end
 
 # Configure Druid

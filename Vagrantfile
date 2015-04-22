@@ -76,7 +76,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.json = {}
 
     chef.run_list = [
-        "recipe[chef-druid-example::default]"
+        "recipe[druid-example::default]"
     ]
   end
 end
