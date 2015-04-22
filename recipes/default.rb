@@ -55,7 +55,7 @@ end
 
 # Fix up the example client to point to our broker
 execute "fix example client URL" do
-  command "sed -i 's|localhost:[0-9]*/druid/v2/?w|localhost:8080/druid/v2/?pretty|' #{node[:druid][:install_dir]}/current/run_example_client.sh"
+  command "sed -i 's|localhost:[0-9]*/druid/v2/?w|localhost:8083/druid/v2/?pretty|' #{node[:druid][:install_dir]}/current/run_example_client.sh"
 end
 
 execute "fix example client permissions" do
