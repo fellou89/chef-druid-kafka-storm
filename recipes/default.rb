@@ -48,10 +48,10 @@ include_recipe "druid::historical"
 include_recipe "druid::coordinator"
 include_recipe "druid::broker"
 include_recipe "druid::realtime"
-
 package "curl" do
   action :install
 end
+
 
 # Fix up the example client to point to our broker
 execute "fix example client URL" do
@@ -61,3 +61,9 @@ end
 execute "fix example client permissions" do
   command "chmod 755 #{node[:druid][:install_dir]}/current/run_example_client.sh"
 end
+
+# Kafka configuration
+node.set['kafka']['server.properties']['broker.id'] = 1
+node.set['kafka']['zookeepers'] = ['localhost:2181']
+node.set['kafka']['version'] = '0.8.2.1'
+include_recipe "cerner_kafka"

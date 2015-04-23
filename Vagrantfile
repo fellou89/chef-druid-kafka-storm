@@ -11,6 +11,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
+  $box_name = "opscode_ubuntu-12.04_provisionerless"
+  $box_path = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box" 
+
   # Prevent the "stdin: is not a tty" warning
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
@@ -19,12 +22,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set the version of chef to install using the vagrant-omnibus plugin
   config.omnibus.chef_version = :latest
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "opscode_ubuntu-12.04_provisionerless"
 
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = $box_name
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
+  config.vm.box_url = $box_path
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
@@ -47,13 +50,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider :virtualbox do |vb|
+   config.vm.provider :virtualbox do |vb|
   #   # Don't boot with headless mode
   #   vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
+     vb.customize ["modifyvm", :id, "--memory", "4096"]
+   end
   #
   # View the documentation for the provider you're using for more
   # information on available options.
@@ -77,7 +80,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.json = {}
 
     chef.run_list = [
-        "recipe[druid-example::default]"
+        "recipe[druid-example::default]",
+        "recipe[golang]",
+        "recipe[cerner_kafka]"
     ]
   end
 end
