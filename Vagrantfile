@@ -120,7 +120,7 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
         "recipe[golang]",
         "recipe[cerner_kafka]",
         "recipe[vim]",
-        "recipe[tmux]"
+        "recipe[tmux]",
         "recipe[storm-cookbook]"
     ]
   end
