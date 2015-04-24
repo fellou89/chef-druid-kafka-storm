@@ -36,13 +36,14 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
   # via the IP. Host-only networks can talk to the host machine as well as
   # any other machines on the same network, but cannot be accessed (through this
   # network interface) by any external networks.
-  # config.vm.network :private_network, type: "dhcp"
+  config.vm.network :private_network, type: "dhcp"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 8083, host: 8083
+  config.vm.network "forwarded_port", guest: 8081, host: 8081
   config.ssh.forward_agent = true
+
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
@@ -80,7 +81,39 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
   # config.berkshelf.except = []
 
   config.vm.provision :chef_solo do |chef|
-    chef.json = {}
+    chef.add_recipe "java"
+    chef.add_recipe "storm-cookbook::singlenode"
+
+    chef.json = {
+      :java => {
+        :oracle => {
+          "accept_oracle_download_terms" => true
+        },
+        :install_flavor => "openjdk",
+        :jdk_version => "7",
+      },
+
+      :storm => {
+        :deploy => {
+          :user => "storm",
+          :group => "storm",
+        },
+        :nimbus => {
+          :host => "localhost",
+          :childopts => "-Xmx128m",
+        },
+        :supervisor => {
+          :hosts =>  ["localhost"],
+          :childopts => "-Xmx128m",
+        },
+        :worker => {
+          :childopts => "-Xmx128m",
+        },
+        :ui => {
+          :childopts => "-Xmx128m",
+        },
+      },
+    }
 
     chef.run_list = [
         "recipe[druid-example::default]",
@@ -88,6 +121,7 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
         "recipe[cerner_kafka]",
         "recipe[vim]",
         "recipe[tmux]"
+        "recipe[storm-cookbook]"
     ]
   end
 

@@ -67,3 +67,20 @@ node.set['kafka']['server.properties']['broker.id'] = 1
 node.set['kafka']['zookeepers'] = ['localhost:2181']
 node.set['kafka']['version'] = '0.8.2.1'
 include_recipe "cerner_kafka"
+
+# Storm configuration
+node.set[:storm][:version] = "0.9.4"
+
+node.set[:storm][:deploy][:user] = ::File.exists?("/home/vagrant") ? "vagrant" : "ubuntu"
+node.set[:storm][:deploy][:group] = ::File.exists?("/home/vagrant") ? "vagrant" : "ubuntu"
+
+node.set[:storm][:nimbus][:host] = "192.168.42.10"
+node.set[:storm][:supervisor][:hosts] = [ "192.168.42.20" ]
+
+node.set[:storm][:nimbus][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
+
+node.set[:storm][:supervisor][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
+node.set[:storm][:supervisor][:workerports] = (6700..6706).to_a
+node.set[:storm][:worker][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
+
+node.set[:storm][:ui][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
