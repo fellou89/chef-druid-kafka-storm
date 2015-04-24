@@ -11,8 +11,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  $box_name = "opscode_ubuntu-12.04_provisionerless"
-  $box_path = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box" 
+#  $box_name = "opscode_ubuntu-12.04_provisionerless"
+#  $box_path = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box" 
+$box_name = "ubuntu-14.10-amd64.box"
+$box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14.10/"
+
 
   # Prevent the "stdin: is not a tty" warning
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
@@ -39,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", guest: 8083, host: 8083
-
+  config.ssh.forward_agent = true
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
@@ -82,7 +85,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.run_list = [
         "recipe[druid-example::default]",
         "recipe[golang]",
-        "recipe[cerner_kafka]"
+        "recipe[cerner_kafka]",
+        "recipe[vim]",
+        "recipe[tmux]"
     ]
   end
 end
