@@ -116,12 +116,17 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
     }
 
     chef.run_list = [
-        "recipe[druid-example::default]",
+        "recipe[druid-kafka-storm::default]",
         "recipe[golang]",
         "recipe[cerner_kafka]",
         "recipe[vim]",
         "recipe[tmux]",
-        "recipe[storm-cookbook]"
+        "recipe[storm-cookbook]",
+        "recipe[maven]"
     ]
+  end
+
+  config.trigger.after [:reload, :halt], stdout: true do 
+   `rm .vagrant/machines/default/virtualbox/synced_folders`
   end
 end

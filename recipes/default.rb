@@ -7,6 +7,9 @@ include_recipe "apt"
 # Install zookeeper
 node.set[:exhibitor][:opts][:port] = 8000
 include_recipe "zookeeper::default"
+# include_recipe "zookeeper::service"
+node.set[:zookeeper][:version] = '3.4.6'
+node.set[:zookeeper][:mirror] = 'http://www.poolsaboveground.com/apache/zookeeper'
 
 node.set['mysql']['server_root_password'] = ''
 #include_recipe "mysql::server"
@@ -69,6 +72,7 @@ node.set['kafka']['version'] = '0.8.2.1'
 include_recipe "cerner_kafka"
 
 # Storm configuration
+include_recipe "storm-cookbook"
 node.set[:storm][:version] = "0.9.4"
 
 node.set[:storm][:deploy][:user] = ::File.exists?("/home/vagrant") ? "vagrant" : "ubuntu"
@@ -84,3 +88,11 @@ node.set[:storm][:supervisor][:workerports] = (6700..6706).to_a
 node.set[:storm][:worker][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
 
 node.set[:storm][:ui][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
+
+# Maven configuration
+# node.set[:ark][:package_dependencies] = []
+node.set[:maven][:version] = "3.3.1"
+node.set[:maven]["3.3.1"]["url"] = "http://mirror.metrocast.net/apache/"
+node.set[:maven]["3.3.1"]["checksum"] = "8aff6a1d1902c84bf2b4be6916e60146"
+node.set[:maven]["3.3.1"]["version"] = "3.3.1"
+include_recipe "maven"

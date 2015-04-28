@@ -12,3 +12,4 @@ cookbook "cerner_kafka"
 cookbook "vim"
 cookbook "tmux"
 cookbook "storm-cookbook", git: 'git@github.com:cloudspace/storm-cookbook.git'
+cookbook 'maven', '~> 1.3.0'
