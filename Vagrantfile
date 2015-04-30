@@ -116,12 +116,14 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
     }
 
     chef.run_list = [
-        "recipe[druid-example::default]",
-        "recipe[golang]",
-        "recipe[cerner_kafka]",
+        "recipe[druid-kafka-storm::default]",
         "recipe[vim]",
         "recipe[tmux]",
-        "recipe[storm-cookbook]"
+        "recipe[golang]",
+        "recipe[zookeeper]",
+        "recipe[cerner_kafka]",
+        "recipe[storm-cookbook]",
+        "recipe[druid]",
     ]
   end
 
@@ -148,6 +150,4 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
       warn e.inspect
     end
   end
-
-
 end
