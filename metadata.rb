@@ -1,13 +1,10 @@
-name             'druid-example'
-maintainer       'N3TWORK'
-maintainer_email 'yuval@n3twork.com'
+name             'druid-kafka-storm'
+maintainer       'Cloudspace'
+maintainer_email 'alfredo@cloudspace.com'
 license          'Apache 2.0'
-description      'Installs an example druid single-node cluster'
-long_description 'Installs/Configures chef-druid-example'
+description      'Installs a druid single-node cluster, kafka, and storm'
 version          '0.0.1'
 
 depends "apt"
 depends "database"
-depends "druid"
 depends "mysql"
-depends "zookeeper"
