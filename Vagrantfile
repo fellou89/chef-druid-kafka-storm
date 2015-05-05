@@ -82,7 +82,7 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
 
   config.vm.provision :chef_solo do |chef|
     chef.add_recipe "java"
-    chef.add_recipe "storm-cookbook::singlenode"
+#    chef.add_recipe "storm-cookbook::singlenode"
 
     chef.json = {
       :java => {
@@ -94,6 +94,7 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
       },
 
       :storm => {
+        :version => "0.9.4",
         :deploy => {
           :user => "vagrant",
           :group => "user",
@@ -126,7 +127,6 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
         "recipe[tmux]",
         "recipe[zookeeper]",
         "recipe[cerner_kafka]",
-        "recipe[storm-cookbook]",
         "recipe[druid]"
     ]
   end
