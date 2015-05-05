@@ -95,8 +95,8 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
 
       :storm => {
         :deploy => {
-          :user => "storm",
-          :group => "storm",
+          :user => "vagrant",
+          :group => "user",
         },
         :nimbus => {
           :host => "localhost",

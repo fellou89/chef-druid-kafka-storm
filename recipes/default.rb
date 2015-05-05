@@ -87,11 +87,3 @@ node.set[:storm][:supervisor][:workerports] = (6700..6706).to_a
 node.set[:storm][:worker][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
 
 node.set[:storm][:ui][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
-
-# Maven configuration
-# node.set[:ark][:package_dependencies] = []
-node.set[:maven][:version] = "3.3.1"
-node.set[:maven]["3.3.1"]["url"] = "http://mirror.metrocast.net/apache/"
-node.set[:maven]["3.3.1"]["checksum"] = "8aff6a1d1902c84bf2b4be6916e60146"
-node.set[:maven]["3.3.1"]["version"] = "3.3.1"
-include_recipe "maven"
