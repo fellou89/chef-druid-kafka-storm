@@ -11,10 +11,9 @@ include_recipe "zookeeper::default"
 node.set[:zookeeper][:version] = '3.4.6'
 node.set[:zookeeper][:mirror] = 'http://www.poolsaboveground.com/apache/zookeeper'
 
+# Create the druid db
 node.set['mysql']['server_root_password'] = ''
 #include_recipe "mysql::server"
-
-# Create the druid db
 #include_recipe "database::mysql"
 mysql_service 'druid' do
 #  connection(
@@ -79,12 +78,12 @@ node.set[:storm][:deploy][:user] = ::File.exists?("/home/vagrant") ? "vagrant" :
 node.set[:storm][:deploy][:group] = ::File.exists?("/home/vagrant") ? "vagrant" : "ubuntu"
 
 node.set[:storm][:nimbus][:host] = "192.168.42.10"
-node.set[:storm][:supervisor][:hosts] = [ "192.168.42.20" ]
-
 node.set[:storm][:nimbus][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
+node.set[:storm][:supervisor][:hosts] = [ "192.168.42.20" ]
 
 node.set[:storm][:supervisor][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
 node.set[:storm][:supervisor][:workerports] = (6700..6706).to_a
+
 node.set[:storm][:worker][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
 
 node.set[:storm][:ui][:childopts] = "-Xmx512m -Djava.net.preferIPv4Stack=true"
