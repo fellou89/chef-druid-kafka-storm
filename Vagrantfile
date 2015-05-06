@@ -80,6 +80,8 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
   # to skip installing and copying to Vagrant's shelf.
   # config.berkshelf.except = []
 
+  storm_version = "0.9.4"
+
   config.vm.provision :chef_solo do |chef|
     chef.add_recipe "java"
 #    chef.add_recipe "storm-cookbook::singlenode"
@@ -94,7 +96,7 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
       },
 
       :storm => {
-        :version => "0.9.4",
+        :version => storm_version,
         :deploy => {
           :user => "vagrant",
           :group => "user",
@@ -130,6 +132,13 @@ $box_path = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14
         "recipe[druid]"
     ]
   end
+storm_path = "/home/vagrant/apache-storm-${storm_version}"
+$script = <<SCRIPT
+   sudo echo "tranquility.zk.connect: \"localhost:2181\"" >> ${storm_path}/conf/storm.yaml
+SCRIPT
+
+  config.vm.provision "shell", inline: $script  
+
 
   config.vm.synced_folder ".", "/srv/druid"
   # Require the Trigger plugin for Vagrant

@@ -1,7 +1,7 @@
 #!/bin/bash
-USE_TMUX=1
+USE_TMUX=0
 
-DRUID_CLASSPATH="config/_common:lib/*:../hadoop_from_altiscale/*"
+DRUID_CLASSPATH="config/_common:lib/*"
 DRUID_CMD_START="sudo HADOOP_USER_NAME=rustyp java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8"
 DRUID_MAIN_CLASS="io.druid.cli.Main"
 DRUID_DIR="/srv/druid/current"
