@@ -48,19 +48,19 @@ From the machine:
 	% ./run_example_client.sh wikipedia
 	
 
-Contributing
-------------
 
-1. Fork the repository on Github
-2. Create a named feature branch (i.e. `add-new-recipe`)
-3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request
+###Scripts that document things:
 
+tmux-start-druid.sh - starts druid; designed to work inside tmux.
+start-kafka-things.sh - starts kafka; probably only the "consumer" piece is need when run using storm because storm itself starts zookeeper and Kafka.
 
-License and Authors
--------------------
-Copyright 2014 N3TWORK, Inc.<br>
-Licensed under Apache 2.0<br>
-Written by Yuval Oren (yuval@n3twork.com)
+### Other projects that we use for this:
+
+cloudspace/kafka-storm-tranquility
+cloudspace/chef-druid-kafka
+cloudspace/chef-druid-kafka-storm
+cloudspace/storm-cookbook
+
+Eventually chef-druid-kafka will probably be deprecated, but it may still have things that are useful.
+
+Note, also, that currently, the use of the chef-druid-kafka-storm cookbook comes from a forked druid cookbook *which is broken*.  Part of that brokenness remains.  There are four upstart tasks under /etc/init/druid-* that need to be turned off (using ```stop TASKNAME```) for this to behave properly.
